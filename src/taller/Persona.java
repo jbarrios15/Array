@@ -5,6 +5,10 @@
  */
 package taller;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+
 /**
  *
  * @author JapiB
@@ -12,13 +16,13 @@ package taller;
     public class Persona {
     private String nombre;
     private String Apellido;
-    private int edad;
+    private String fecha_nacimiento;
     private String tel;
 
-    public Persona(String nombre, String Apellido, int edad, String tel) {
+    public Persona(String nombre, String Apellido, String fecha_nacimiento, String tel) {
         this.nombre = nombre;
         this.Apellido = Apellido;
-        this.edad = edad;
+        this.fecha_nacimiento = fecha_nacimiento;
         this.tel = tel;
     }
     
@@ -32,12 +36,12 @@ package taller;
     this.nombre = nombre;
     }
     
-    public int getEdad() {
-    return edad;
+    public String getfecha_nacimiento() {
+    return fecha_nacimiento;
     }
     
-    public void setEdad(int edad) {
-    this.edad = edad;
+    public void setfecha_nacimiento(String edad) {
+    this.fecha_nacimiento= edad;
     }
 
     public String getApellido() {
@@ -60,7 +64,7 @@ package taller;
     
     public String toString(){
     String a="Persona registrada: \n"
-            + "Nombre: "+nombre+" "+Apellido+", "+edad+" años y telefono, "+tel;
+            + "Nombre: "+nombre+" "+Apellido+", "+fecha_nacimiento+" años y telefono, "+tel;
     return a;
     
     }

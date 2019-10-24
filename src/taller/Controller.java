@@ -5,6 +5,9 @@
  */
 package taller;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,7 +32,8 @@ public class Controller {
     public void cargarMenu(){
 
         
-        seleccionarOpcion(Integer.parseInt(JOptionPane.showInputDialog("Bienvenido a SofBarr\n"
+        seleccionarOpcion(Integer.parseInt(JOptionPane.showInputDialog("Bienven"
+                + "ido a SofBarr\n"
                 + "\n"
                 + "Elija la opcion del 1 al 5 \n"
                 + "---------------\n"
@@ -59,6 +63,7 @@ public class Controller {
         this.cargarMenu();
         break;
         case 5:
+            System.exit(0);
 //            AgregarNuevaPersona();
             break;
         default: JOptionPane.showMessageDialog(null, "Error al seleccionar, intente nuevamente");
@@ -74,13 +79,20 @@ public class Controller {
         
             try{
                 for (int i=0;i<arrayObjetos.length;i++){
-             int per=i+1;       
+             int per=i+1; 
             String nombre=JOptionPane.showInputDialog("Escribe los nombres de persona "+per);
             String apellido=JOptionPane.showInputDialog("Escribe los apellidos de la persona "+per);
-             int edad=Integer.parseInt(JOptionPane.showInputDialog("Escribe la edad de la persona "+per));
-             String tel=JOptionPane.showInputDialog("Escribe el telelefono de la persona "+per);
+            String r=(JOptionPane.showInputDialog("Escribe fecha de nacimiento de la persona "+per));
+            int p=0;
             
-            arrayObjetos[i]=new Persona(nombre,apellido,edad,tel);
+            validarfecha(r);
+            
+             JOptionPane.showMessageDialog(null, GetEdad(r));
+             
+             String tel=JOptionPane.showInputDialog("Escribe el telelefono de la persona "+per);
+                  
+             
+            arrayObjetos[i]=new Persona(nombre,apellido,r,tel);
             
             JOptionPane.showMessageDialog(null,arrayObjetos[i]);
             n+=1;
@@ -113,7 +125,6 @@ public class Controller {
         
         for (int i=0;i<arrayObjetos.length;i++){
             arrayObjetos[i]=null;
- 
         }
              n=0;
              
@@ -125,30 +136,40 @@ public class Controller {
             return false;
             
         }else{
-            System.out.println("hay "+n+" personas registradas en el vector");
+            JOptionPane.showMessageDialog(null, "hay "+n+" personas registradas en el vector");
             return true;
         }
        
         
    }
     
-//    public void AgregarNuevaPersona(){
-//        Persona tem[] = new Persona[arrayObjetos.length + 1];
-//
-//        for (int i = 0; i < arrayObjetos.length; i++){
-//            tem[i] = arrayObjetos[i];
-//            }
-//        arrayObjetos = tem;
-//        
-//        System.out.println(arrayObjetos.length);
-//        
-//        r=arrayObjetos.length;
-//        System.out.println("hola6");
-//        this.llenarArray();
-//        
-//    }
-//    
+    public int GetEdad(String fe){
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
+        LocalDate fechaNac = LocalDate.parse(fe, fmt);
+        LocalDate ahora = LocalDate.now();
+
+        Period periodo = Period.between(fechaNac, ahora); 
+        return periodo.getYears();
+    }
     
+    public int validarfecha(String fe){
+        try{
+            
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
+        LocalDate fechaNac = LocalDate.parse(fe, fmt);
+        LocalDate ahora = LocalDate.now();
+
+        Period periodo = Period.between(fechaNac, ahora); 
+        return periodo.getYears();
+        }catch(Exception ie){
+            JOptionPane.showMessageDialog(null, "Ingrese correctamente la fecha");
+            llenarArray();
+            
+        }
+        return 0;
+    }
     
     
  }
