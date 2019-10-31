@@ -31,8 +31,8 @@ public class Controller {
     
     public void cargarMenu(){
 
-        
-        seleccionarOpcion(Integer.parseInt(JOptionPane.showInputDialog("Bienven"
+        try {
+             seleccionarOpcion(Integer.parseInt(JOptionPane.showInputDialog("Bienven"
                 + "ido a SofBarr\n"
                 + "\n"
                 + "Elija la opcion del 1 al 5 \n"
@@ -41,8 +41,15 @@ public class Controller {
                 + "2. Mostrar array\n"
                 + "3. Eliminar todas las personas registradas\n"
                 + "4. Verificar cuantas personas estan registradas\n"
-                + "5. Salir\n"
-                + "")));
+                + "5. Calcular masa corporal\n"
+                + "6. Salir\n")));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar una opcion \n"
+                    + "\n"
+                    + " Verifique e intente de nuevo");
+            this.cargarMenu();
+        }
+       
 
     }
     public void seleccionarOpcion(int op){
@@ -63,10 +70,15 @@ public class Controller {
         this.cargarMenu();
         break;
         case 5:
-            System.exit(0);
-//            AgregarNuevaPersona();
-            break;
-        default: JOptionPane.showMessageDialog(null, "Error al seleccionar, intente nuevamente");
+           menuIMC();
+        break;
+        case 6:
+            this.confirmarCerrarTodo();
+            this.cargarMenu();
+         break;
+        default: JOptionPane.showMessageDialog(null, "Error al seleccionar la opcion \n"
+                + "\n"
+                + "Recuerde elegir del 1 al 7");
         this.cargarMenu();
         
      }  
@@ -82,21 +94,19 @@ public class Controller {
              int per=i+1; 
             String nombre=JOptionPane.showInputDialog("Escribe los nombres de persona "+per);
             String apellido=JOptionPane.showInputDialog("Escribe los apellidos de la persona "+per);
-            String r=(JOptionPane.showInputDialog("Escribe fecha de nacimiento de la persona "+per));
             int p=0;
+            String r;
             
-            validarfecha(r);
+            do{
+            r=(JOptionPane.showInputDialog("Escribe fecha de nacimiento de la persona "+per)); 
+            }while(validarfecha(r));
             
              JOptionPane.showMessageDialog(null, GetEdad(r));
-             
-             String tel=JOptionPane.showInputDialog("Escribe el telelefono de la persona "+per);
-                  
-             
+            String tel=JOptionPane.showInputDialog("Escribe el telelefono de la persona "+per);
             arrayObjetos[i]=new Persona(nombre,apellido,r,tel);
             
             JOptionPane.showMessageDialog(null,arrayObjetos[i]);
             n+=1;
-               
             }
                 }catch(Exception ie){
                 JOptionPane.showMessageDialog(null, "Error al registrar la persona, intente nuevamente");
@@ -127,7 +137,7 @@ public class Controller {
             arrayObjetos[i]=null;
         }
              n=0;
-             
+       this.cargarMenu();  
     }
     
     public boolean verificar_si_hay_datos(int n){
@@ -153,7 +163,7 @@ public class Controller {
         return periodo.getYears();
     }
     
-    public int validarfecha(String fe){
+    public boolean validarfecha(String fe){ 
         try{
             
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -162,15 +172,113 @@ public class Controller {
         LocalDate ahora = LocalDate.now();
 
         Period periodo = Period.between(fechaNac, ahora); 
-        return periodo.getYears();
+        periodo.getYears();
+        return false;
+        
         }catch(Exception ie){
-            JOptionPane.showMessageDialog(null, "Ingrese correctamente la fecha");
-            llenarArray();
+            JOptionPane.showMessageDialog(null, "Recuerde usar correctamente el formato:\n"
+                    + "dd/MM/yyyy\n"
+                    + "Tenga en cuenta usar Slash= ``/´´ para separar");
+            return true;
             
         }
-        return 0;
+        
     }
     
+    public void  masacorporal(){
+        double altu=alturaPersona();
+        double peso=pesoPersona();
+        double Imc=peso/altu;
+        JOptionPane.showMessageDialog(null, Imc);
+    }
     
+    public void menuIMC(){
+    JOptionPane.showMessageDialog(null, "Para calcular la masa corporal debe ingresar: \n"
+                + "Peso en Kg= kilogramos \n"
+                + "Altura en metros");
+    
+     try {
+             opcionIMC(Integer.parseInt(JOptionPane.showInputDialog("Sel"
+                     + "eccione que desea ingresar\n"
+                     + "1. Peso\n"
+                     + "2. Altura\n"
+                     + "3. Calcular la masa corporal\n"
+                     + "4. Retroceder a menu principal\n"
+                     + "5. Cerrar todo")));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar una opcion \n"
+                    + "\n"
+                    + " Verifique e intente de nuevo");
+            this.cargarMenu();
+        }
+    
+    }
+    
+    public void opcionIMC(int op){
+        switch(op){
+            case 1:
+                this.alturaPersona();
+                this.menuIMC();
+            break;
+            case 2:
+                this.pesoPersona();
+                this.menuIMC();
+            break;
+            case 3:
+                masacorporal();
+            break;
+            case 4: 
+                this.cargarMenu();
+            break;
+            case 5:
+                this.confirmarCerrarTodo();
+                this.menuIMC();
+            break; 
+            default:
+                
+        }
+    }
+    
+    public void confirmarCerrarTodo(){
+        int up=JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea salir?", "Confi"
+                        + "rmar salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(up==0){
+                    System.exit(0);
+                }
+    }
+    public double alturaPersona(){
+        double altu_2=0;
+        try {
+        double alt=Double.parseDouble(JOptionPane.showInputDialog("Ingrese la altura de la persona\n"
+                + "\n"
+                + "*Recuerde que tiene que ser en metros*"));
+         altu_2=alt*alt;
+         return altu_2;
+         
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar la altura \n"
+                    + "\n"
+                    + "Verifique e intente de nuevo");
+                     this.alturaPersona();
+        }
+        
+        
+    }
+    
+    public double pesoPersona(){
+       double peso=0;
+        try {
+        peso=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el peso de la persona\n"
+                + "\n"
+                + "*Recuerde que tiene que ser en Kilogramos*"));
+            return peso;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar el peso \n"
+                    + "\n"
+                    + "Verifique e intente de nuevo");
+                     this.pesoPersona();
+        }
+        
+    }
  }
 
