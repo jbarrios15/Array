@@ -8,6 +8,7 @@ package taller;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,7 +25,10 @@ public class Controller {
         
     }
     
-    Persona arrayObjetos[]=new Persona[2];
+//    Persona arrayObjetos[]=new Persona[2];
+    
+    ArrayList <Persona> arrayObjetos=new ArrayList();
+    
     private double alkk=0;
     
     
@@ -88,13 +92,14 @@ public class Controller {
         }
     }
     public void llenarArray(){
-        
-            try{
-                for (int i=0;i<arrayObjetos.length;i++){
+        int i=0;
+//            try{
+//                for (int i=0;i<arrayObjetos.size();i++){
+            int upp=0;
+            do{
              int per=i+1; 
             String nombre=JOptionPane.showInputDialog("Escribe los nombres de persona "+per);
             String apellido=JOptionPane.showInputDialog("Escribe los apellidos de la persona "+per);
-            int p=0;
             String r;
             
             do{
@@ -103,15 +108,23 @@ public class Controller {
             
              JOptionPane.showMessageDialog(null, GetEdad(r));
             String tel=JOptionPane.showInputDialog("Escribe el telelefono de la persona "+per);
-            arrayObjetos[i]=new Persona(nombre,apellido,r,tel);
+            arrayObjetos.add(new Persona(nombre,apellido,r,tel));
             
-            JOptionPane.showMessageDialog(null,arrayObjetos[i]);
+//            JOptionPane.showMessageDialog(null, arrayObjetos.get(i));
             n+=1;
-            }
-                }catch(Exception ie){
-                JOptionPane.showMessageDialog(null, "Error al registrar la persona, intente nuevamente");
-                this.llenarArray();
-            }
+            
+            
+            int up=JOptionPane.showConfirmDialog(null, "¿Desea seguir agregando?", "Agregar persona"
+                    + "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(up==0){
+                    upp=1;
+                }
+            }while(upp==1 );
+//            }
+//                }catch(Exception ie){
+//                JOptionPane.showMessageDialog(null, "Error al registrar la persona, intente nuevamente");
+//                this.llenarArray();
+//            }
             
             this.cargarMenu();
             
@@ -121,8 +134,8 @@ public class Controller {
  
     public void mostrarArray(){
         if(verificar_si_hay_datos(n)){
-           for (int i=0;i<arrayObjetos.length;i++){
-            JOptionPane.showMessageDialog(null, arrayObjetos[i]); 
+           for (int i=0;i<arrayObjetos.size();i++){
+            JOptionPane.showMessageDialog(null, arrayObjetos.get(i)); 
             
         } 
         }
@@ -133,8 +146,8 @@ public class Controller {
     
     public void eliminarDatosPersonas(){
         
-        for (int i=0;i<arrayObjetos.length;i++){
-            arrayObjetos[i]=null;
+        for (int i=0;i<arrayObjetos.size();i++){
+            arrayObjetos.set(i, null);
         }
              n=0;
        this.cargarMenu();  
@@ -313,8 +326,16 @@ public class Controller {
         
     }
     
-    
-    
+//    public boolean validarNombre_apellido(String re){
+//        for (int i = 0; i < re.length(); i++)
+//		{
+//			char caracter = re.toUpperCase().charAt(i);
+//			int valorASCII = (int)caracter;
+//			if (valorASCII != 165 && (valorASCII < 65 || valorASCII > 90))
+//				return false; //Se ha encontrado un caracter que no es letra
+//		}
+//        
+//    }
     
     
  }
