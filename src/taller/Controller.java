@@ -25,7 +25,7 @@ public class Controller {
     }
     
     Persona arrayObjetos[]=new Persona[2];
-    
+    private double alkk=0;
     
     
     
@@ -35,7 +35,7 @@ public class Controller {
              seleccionarOpcion(Integer.parseInt(JOptionPane.showInputDialog("Bienven"
                 + "ido a SofBarr\n"
                 + "\n"
-                + "Elija la opcion del 1 al 5 \n"
+                + "Elija la opcion del 1 al 6 \n"
                 + "---------------\n"
                 + "1. Crear y llenar array\n"
                 + "2. Mostrar array\n"
@@ -46,7 +46,7 @@ public class Controller {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al ingresar una opcion \n"
                     + "\n"
-                    + " Verifique e intente de nuevo");
+                    + " Verifique al digitar");
             this.cargarMenu();
         }
        
@@ -190,6 +190,7 @@ public class Controller {
         double peso=pesoPersona();
         double Imc=peso/altu;
         JOptionPane.showMessageDialog(null, Imc);
+        this.menuIMC();
     }
     
     public void menuIMC(){
@@ -199,16 +200,17 @@ public class Controller {
     
      try {
              opcionIMC(Integer.parseInt(JOptionPane.showInputDialog("Sel"
-                     + "eccione que desea ingresar\n"
-                     + "1. Peso\n"
-                     + "2. Altura\n"
-                     + "3. Calcular la masa corporal\n"
-                     + "4. Retroceder a menu principal\n"
-                     + "5. Cerrar todo")));
+                     + "Seleccione que desea ingresar\n"
+                     + "\n"
+                     + "1. Calcular la masa corporal\n"
+                     + "2. PesoEvaluar su masa corporal\n"
+                     + "3. Retroceder\n"
+                     + "5. Cerrar todo"
+                     + "\n")));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al ingresar una opcion \n"
                     + "\n"
-                    + " Verifique e intente de nuevo");
+                    + " Verifique al ingresar");
             this.cargarMenu();
         }
     
@@ -217,25 +219,22 @@ public class Controller {
     public void opcionIMC(int op){
         switch(op){
             case 1:
-                this.alturaPersona();
-                this.menuIMC();
-            break;
-            case 2:
-                this.pesoPersona();
-                this.menuIMC();
-            break;
-            case 3:
                 masacorporal();
             break;
-            case 4: 
+            case 2:
+               ingresarNumeroDouble();
+            break;
+            case 3:
                 this.cargarMenu();
             break;
-            case 5:
+            case 4: 
                 this.confirmarCerrarTodo();
                 this.menuIMC();
-            break; 
+            break;  
             default:
-                
+                JOptionPane.showMessageDialog(null, "Error al seleccionar la opcion \n"
+                + "\n"
+                + "Recuerde elegir del 1 al 4");
         }
     }
     
@@ -247,12 +246,14 @@ public class Controller {
                 }
     }
     public double alturaPersona(){
-        double altu_2=0;
+        double altu_2=0,alm=0;
         try {
         double alt=Double.parseDouble(JOptionPane.showInputDialog("Ingrese la altura de la persona\n"
                 + "\n"
-                + "*Recuerde que tiene que ser en metros*"));
-         altu_2=alt*alt;
+                + "*Recuerde que tiene que ser en centimetros*"));
+        alm=alt/100;
+         altu_2=alm*alm;
+         
          return altu_2;
          
         } catch (Exception e) {
@@ -261,9 +262,8 @@ public class Controller {
                     + "Verifique e intente de nuevo");
                      this.alturaPersona();
         }
-        
-        
-    }
+        return 55;
+        }
     
     public double pesoPersona(){
        double peso=0;
@@ -278,7 +278,44 @@ public class Controller {
                     + "Verifique e intente de nuevo");
                      this.pesoPersona();
         }
+        return 56;
+    }
+
+   public void evaluarIMC (double imc){
+       
+      if(imc<18.5){
+          JOptionPane.showMessageDialog(null, "Peso inferior al normal");
+      }else{
+          if(imc>18.5 && imc<24.9){
+              JOptionPane.showMessageDialog(null, "Normal");
+          }else{
+              if(imc>25.0 && imc<29.9){
+                 JOptionPane.showMessageDialog(null, "Peso superior al normal"); 
+              }else {
+                  if(imc>30.0){
+                      JOptionPane.showMessageDialog(null, "obesidadl");
+                  }
+              }
+          }
+      }
+      this.menuIMC();
+   }
+    
+    public void ingresarNumeroDouble(){
+        try {
+          evaluarIMC(Double.parseDouble(JOptionPane.showInputDialog("Ingrese la masa corporal")));  
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar la masa corporal \n"
+                    + "\n"
+                    + "Verifique al digitar");
+            this.ingresarNumeroDouble();
+        }
         
     }
+    
+    
+    
+    
+    
  }
 
