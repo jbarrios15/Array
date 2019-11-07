@@ -21,15 +21,16 @@ public class Controller {
     public int n =0;
    
     public Controller() {
-        this.cargarMenu();
-        
+       
     }
     
 //    Persona arrayObjetos[]=new Persona[2];
     
     ArrayList <Persona> arrayObjetos=new ArrayList();
+    ArrayList<Masa_corporal> historialmasa=new ArrayList();
     
     private double alkk=0;
+    private String dia="";
     
     
     
@@ -69,8 +70,8 @@ public class Controller {
         case 3:
             this.eliminarDatosPersonas();
         break;
-        case 4:
-        this.verificar_si_hay_datos(n);
+        case 4:   
+        this.verificar_si_hay_datos();
         this.cargarMenu();
         break;
         case 5:
@@ -80,6 +81,10 @@ public class Controller {
             this.confirmarCerrarTodo();
             this.cargarMenu();
          break;
+        case 7:
+          
+           
+         break;   
         default: JOptionPane.showMessageDialog(null, "Error al seleccionar la opcion \n"
                 + "\n"
                 + "Recuerde elegir del 1 al 7");
@@ -93,8 +98,7 @@ public class Controller {
     }
     public void llenarArray(){
         int i=0;
-//            try{
-//                for (int i=0;i<arrayObjetos.size();i++){
+            try{
             int upp=0;
             do{
              int per=i+1; 
@@ -108,9 +112,13 @@ public class Controller {
             
              JOptionPane.showMessageDialog(null, GetEdad(r));
             String tel=JOptionPane.showInputDialog("Escribe el telelefono de la persona "+per);
+            
+            
             arrayObjetos.add(new Persona(nombre,apellido,r,tel));
             
-//            JOptionPane.showMessageDialog(null, arrayObjetos.get(i));
+            
+             
+            
             n+=1;
             
             
@@ -119,12 +127,13 @@ public class Controller {
                 if(up==0){
                     upp=1;
                 }
+                    
             }while(upp==1 );
 //            }
-//                }catch(Exception ie){
-//                JOptionPane.showMessageDialog(null, "Error al registrar la persona, intente nuevamente");
-//                this.llenarArray();
-//            }
+                }catch(Exception ie){
+                JOptionPane.showMessageDialog(null, "Error al registrar la persona, intente nuevamente");
+                this.llenarArray();
+            }
             
             this.cargarMenu();
             
@@ -133,7 +142,7 @@ public class Controller {
    
  
     public void mostrarArray(){
-        if(verificar_si_hay_datos(n)){
+        if(verificar_si_hay_datos()){
            for (int i=0;i<arrayObjetos.size();i++){
             JOptionPane.showMessageDialog(null, arrayObjetos.get(i)); 
             
@@ -153,8 +162,8 @@ public class Controller {
        this.cargarMenu();  
     }
     
-    public boolean verificar_si_hay_datos(int n){
-        if(n==0){
+    public boolean verificar_si_hay_datos(){
+        if(arrayObjetos.size()==0){
             JOptionPane.showMessageDialog(null, "No hay personas registradas en el vector");
             return false;
             
@@ -198,11 +207,40 @@ public class Controller {
         
     }
     
-    public void  masacorporal(){
-        double altu=alturaPersona();
-        double peso=pesoPersona();
-        double Imc=peso/altu;
-        JOptionPane.showMessageDialog(null, Imc);
+    public void  HistorialMasaCorporal(){
+        int i=0;
+        if(verificar_si_hay_datos()){
+            int op=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero de la persona que desea agregar historial de IMC \n"
+                    + "Si no conoce el numero puede ver las personas registradas y su numero en la segunda opcion \n"
+                    + "de el menú anterior."));
+            
+            do{
+                JOptionPane.showMessageDialog(null, "Ingrese peso y altura de la persona: \n"
+                        + arrayObjetos.get(i));
+                String mes=JOptionPane.showInputDialog("Ingrese el mes ");
+                double peso=Double.parseDouble(JOptionPane.showInputDialog("Ingrese peso de la persona "));
+                double altura=Double.parseDouble(JOptionPane.showInputDialog("Ingrese altura de la persona "));
+                double alt=altura*altura;
+                 double imc=peso/alt;
+                 String t=evaluarIMC(imc);
+//                  Masa_corporal e = new Masa_corporal(mes, altura, peso, imc, t);
+//                 e.setAltura(altura);
+//                 e.setMes(mes);
+//                 e.setImc(imc);
+//                 e.setPeso(peso);
+//                 e.setDiagnostico(t);
+                 
+                 arrayObjetos.set(, e)
+                 historialmasa.add(historialmasa.get(i));
+                 historialmasa.set(arrayObjetos.get(i), e);
+                 arrayObjetos.
+                i++;
+            }while(i==arrayObjetos.size());
+            
+    }
+        
+        
+        
         this.menuIMC();
     }
     
@@ -215,10 +253,10 @@ public class Controller {
              opcionIMC(Integer.parseInt(JOptionPane.showInputDialog("Sel"
                      + "Seleccione que desea ingresar\n"
                      + "\n"
-                     + "1. Calcular la masa corporal\n"
-                     + "2. PesoEvaluar su masa corporal\n"
-                     + "3. Retroceder\n"
-                     + "5. Cerrar todo"
+                     + "1. Crear persona \n"
+                     + "2. Imprimir personas\n"
+                     + "3. historial clinico\n"
+                     + "4. Cerrar todo"
                      + "\n")));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al ingresar una opcion \n"
@@ -232,13 +270,13 @@ public class Controller {
     public void opcionIMC(int op){
         switch(op){
             case 1:
-                masacorporal();
+                
             break;
             case 2:
-               ingresarNumeroDouble();
+              mostrarArray();
             break;
             case 3:
-                this.cargarMenu();
+                HistorialMasaCorporal();
             break;
             case 4: 
                 this.confirmarCerrarTodo();
@@ -294,24 +332,29 @@ public class Controller {
         return 56;
     }
 
-   public void evaluarIMC (double imc){
-       
+   public String evaluarIMC (double imc){
+       String t="";
       if(imc<18.5){
           JOptionPane.showMessageDialog(null, "Peso inferior al normal");
+          t="Peso inferior al normal";
       }else{
           if(imc>18.5 && imc<24.9){
               JOptionPane.showMessageDialog(null, "Normal");
+              t="Normal";
           }else{
               if(imc>25.0 && imc<29.9){
-                 JOptionPane.showMessageDialog(null, "Peso superior al normal"); 
+                 JOptionPane.showMessageDialog(null, "Peso superior al normal");
+                 t="Peso superior al normal";
               }else {
                   if(imc>30.0){
-                      JOptionPane.showMessageDialog(null, "obesidadl");
+                      JOptionPane.showMessageDialog(null, "obesidad");
+                      t="obesidad";
                   }
               }
           }
       }
-      this.menuIMC();
+      return t;
+//      this.menuIMC();
    }
     
     public void ingresarNumeroDouble(){
@@ -323,6 +366,10 @@ public class Controller {
                     + "Verifique al digitar");
             this.ingresarNumeroDouble();
         }
+        
+    }
+    
+    public void preguntasidesearegistrarhistorial(){
         
     }
     

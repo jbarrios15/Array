@@ -25,6 +25,8 @@ import java.time.format.DateTimeFormatter;
         this.fecha_nacimiento = fecha_nacimiento;
         this.tel = tel;
     }
+   
+    
     
     
     
@@ -59,12 +61,22 @@ import java.time.format.DateTimeFormatter;
     public void setTel(String tel) {
         this.tel = tel;
     }
+
+    public String getFecha_nacimiento() {
+        return fecha_nacimiento;
+    }
+
+    public void setFecha_nacimiento(String fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
+    }
+
     
     
     
     public String toString(){
     String a="Persona registrada: \n"
             + "Nombre: "+nombre+" "+Apellido+", "+fecha_nacimiento+" años y telefono, "+tel;
+            
     return a;
     
     }

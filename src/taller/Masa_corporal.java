@@ -5,10 +5,83 @@
  */
 package taller;
 
+import javax.swing.JOptionPane;
+
+    
 /**
  *
  * @author estudiante
  */
-public class Masa_corporal {
+public class Masa_corporal{
+    
+    public String mes;
+    public double altura;
+    public double peso;
+    public double imc;
+    public String diagnostico;
+
+    public Masa_corporal(String mes, double altura, double peso, double imc, String diagnostico) {
+        this.mes = mes;
+        this.altura = altura;
+        this.peso = peso;
+        this.imc = imc;
+        this.diagnostico = diagnostico;
+    }
+            
+    
+
+    public double getImc() {
+        return imc;
+    }
+
+    public void setImc(double imc) {
+        this.imc = imc;
+    }
+
+    
+
+   
+    
+
+    public double getAltura() {
+        return altura;
+    }
+
+    public void setAltura(double altura) {
+        this.altura = altura;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
+
+    public String getMes() {
+        return mes;
+    }
+
+    public void setMes(String mes) {
+        this.mes = mes;
+    }
+
+    public String getDiagnostico() {
+        return diagnostico;
+    }
+
+    public void setDiagnostico(String diagnostico) {
+        this.diagnostico = diagnostico;
+    }
+
+ 
+    
+    
+    
+    
+
+    
+    
     
 }
