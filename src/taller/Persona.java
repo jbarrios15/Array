@@ -8,6 +8,7 @@ package taller;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,6 +20,7 @@ import java.time.format.DateTimeFormatter;
     private String documento;
     private String fecha_nacimiento;
     private String tel;
+    ArrayList<Masa_corporal> historialmasa=new ArrayList();
 
     public Persona(String nombre, String Apellido, String documento, String fecha_nacimiento, String tel) {
         this.nombre = nombre;
