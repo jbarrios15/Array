@@ -16,18 +16,26 @@ import java.time.format.DateTimeFormatter;
     public class Persona {
     private String nombre;
     private String Apellido;
+    private String documento;
     private String fecha_nacimiento;
     private String tel;
 
-    public Persona(String nombre, String Apellido, String fecha_nacimiento, String tel) {
+    public Persona(String nombre, String Apellido, String documento, String fecha_nacimiento, String tel) {
         this.nombre = nombre;
         this.Apellido = Apellido;
+        this.documento = documento;
         this.fecha_nacimiento = fecha_nacimiento;
         this.tel = tel;
     }
-   
-    
-    
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+
     
     
     public String getNombre() {

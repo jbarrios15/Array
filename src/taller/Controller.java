@@ -104,6 +104,7 @@ public class Controller {
              int per=i+1; 
             String nombre=JOptionPane.showInputDialog("Escribe los nombres de persona "+per);
             String apellido=JOptionPane.showInputDialog("Escribe los apellidos de la persona "+per);
+            String documento=JOptionPane.showInputDialog("Escribe el documento de la persona "+per);
             String r;
             
             do{
@@ -114,7 +115,7 @@ public class Controller {
             String tel=JOptionPane.showInputDialog("Escribe el telelefono de la persona "+per);
             
             
-            arrayObjetos.add(new Persona(nombre,apellido,r,tel));
+            arrayObjetos.add(new Persona(nombre,apellido,documento,r,tel));
             
             
              
@@ -210,33 +211,27 @@ public class Controller {
     public void  HistorialMasaCorporal(){
         int i=0;
         if(verificar_si_hay_datos()){
-            int op=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero de la persona que desea agregar historial de IMC \n"
-                    + "Si no conoce el numero puede ver las personas registradas y su numero en la segunda opcion \n"
-                    + "de el menú anterior."));
+            String op=JOptionPane.showInputDialog("Ingrese el numero de documento de la persona  que desea agregar historial de IMC \n"
+                    + "Si no lo conoce puede ver las personas registradas \n y su numero de documento en la segunda opcion \n"
+                    + "de el menú anterior.");
             
-            do{
-                JOptionPane.showMessageDialog(null, "Ingrese peso y altura de la persona: \n"
-                        + arrayObjetos.get(i));
-                String mes=JOptionPane.showInputDialog("Ingrese el mes ");
-                double peso=Double.parseDouble(JOptionPane.showInputDialog("Ingrese peso de la persona "));
-                double altura=Double.parseDouble(JOptionPane.showInputDialog("Ingrese altura de la persona "));
-                double alt=altura*altura;
-                 double imc=peso/alt;
-                 String t=evaluarIMC(imc);
-//                  Masa_corporal e = new Masa_corporal(mes, altura, peso, imc, t);
-//                 e.setAltura(altura);
-//                 e.setMes(mes);
-//                 e.setImc(imc);
-//                 e.setPeso(peso);
-//                 e.setDiagnostico(t);
-                 
-                 arrayObjetos.set(, e)
-                 historialmasa.add(historialmasa.get(i));
-                 historialmasa.set(arrayObjetos.get(i), e);
-                 arrayObjetos.
+            while(i<=arrayObjetos.size()){
+                if(op.equals(arrayObjetos.contains(op))){
+                    System.out.println("baiaaa");
+//                JOptionPane.showMessageDialog(null, "Ingrese peso y altura de la persona: \n"
+//                        + arrayObjetos.get(i));
+//                String mes=JOptionPane.showInputDialog("Ingrese el mes ");
+//                double peso=Double.parseDouble(JOptionPane.showInputDialog("Ingrese peso de la persona "));
+//                double altura=Double.parseDouble(JOptionPane.showInputDialog("Ingrese altura de la persona "));
+//                double alt=altura*altura;
+//                 double imc=peso/alt;
+//                 String t=evaluarIMC(imc);
+//                historialmasa.add(i,new Masa_corporal(mes, altura, peso, imc, t));
                 i++;
-            }while(i==arrayObjetos.size());
-            
+               } 
+                System.out.println("no entro");
+            }
+            System.out.println("no entro al ciclo");
     }
         
         
