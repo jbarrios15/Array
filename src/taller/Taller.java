@@ -18,9 +18,11 @@ public class Taller {
      */
     public static void main(String[] args) {
         
-//       Controller mane=new Controller();
+
         Controller mas= new Controller();
           mas.cargarMenu();
+          
+          
       }
       }
     

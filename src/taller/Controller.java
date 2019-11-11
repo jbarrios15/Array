@@ -27,7 +27,7 @@ public class Controller {
 //    Persona arrayObjetos[]=new Persona[2];
     
     ArrayList <Persona> arrayObjetos=new ArrayList();
-    
+    Validaciones vali=new Validaciones();
     
     private double alkk=0;
     private String dia="";
@@ -104,7 +104,9 @@ public class Controller {
              int per=i+1; 
             String nombre=JOptionPane.showInputDialog("Escribe los nombres de persona "+per);
             String apellido=JOptionPane.showInputDialog("Escribe los apellidos de la persona "+per);
-            String documento=JOptionPane.showInputDialog("Escribe el documento de la persona "+per);
+            String documento=vali.validardocumento(JOptionPane.showInputDialog("Escribe el documento de la persona "+per));
+            
+            
             String r;
             
             do{
@@ -206,18 +208,19 @@ public class Controller {
     }
     
     public void  HistorialMasaCorporal(){
-        int i=0;
         
         if(arrayObjetos.isEmpty()){
-            System.out.println("no entro"); 
+            JOptionPane.showMessageDialog(null, "No hay personas registradas");
+            menuIMC();
                }else{
-            for (int j = 0; j < arrayObjetos.size(); j++) {
-                System.out.println("ingrese");
             String opuuu=JOptionPane.showInputDialog("Ingrese el numero de documento de la persona  que desea agregar historial de IMC \n"
                     + "Si no lo conoce puede ver las personas registradas \n y su numero de documento en la segunda opcion \n"
                     + "de el menú anterior.");
-                if(arrayObjetos.get(i).getDocumento().equals(opuuu)){
-                    System.out.println("baiaaa");
+            for (int j = 0; j < arrayObjetos.size(); j++) {
+                System.out.println("ingrese");
+                if(arrayObjetos.get(j).getDocumento().equals(opuuu)){
+                    System.out.println("La persona existe");
+                    submenudehistorial(j);
                 
                 }
             }
@@ -352,49 +355,56 @@ public class Controller {
         
     }
     
-    public void submenudehistorial(){
+    public void submenudehistorial(int u){
+       
         opcionsubmenuhistorial(Integer.parseInt(JOptionPane.showInputDialog("Eliga opcion: \n"
                 + "\n"
                 + "1. Registrar historial IMC\n"
                 + "2. imprimir historial IMC\n"
                 + "3. Retroceder"
-                + "4. Salir")));
+                + "4. Salir")),u);
         
     }
-    public void opcionsubmenuhistorial(int op){
+    public void opcionsubmenuhistorial(int op,int u){
+       
         switch(op){
             case 1:
-             registrarhistorial();
+             registrarhistorial(u);
             break;
             case 2:
-                mostrarhistorial()
+                mostrarhistorial(u);
             break;    
         }
+        
     }
     
-    public void registrarhistorial(){
-        for (int i = 0; i < arrayObjetos.size(); i++) {
-            JOptionPane.showMessageDialog(null, "Ingrese peso y altura de la persona: \n"
-                        + arrayObjetos.get(i));
+    
+    public void registrarhistorial(int u){
+        
+            JOptionPane.showMessageDialog(null, "Ingrese peso y altura de la persona : \n"
+                        + arrayObjetos.get(u));
                 String mes=JOptionPane.showInputDialog("Ingrese el mes ");
-                double peso=Double.parseDouble(JOptionPane.showInputDialog("Ingrese peso de la persona "));
+               double peso=Double.parseDouble(JOptionPane.showInputDialog("Ingrese peso de la persona "));
                 double altura=Double.parseDouble(JOptionPane.showInputDialog("Ingrese altura de la persona "));
-                double alt=altura*altura;
+                double alturametros=altura/100;
+                double alt=alturametros*alturametros; 
                 double imc=peso/alt;
+                JOptionPane.showMessageDialog(null, imc);
                  String t=evaluarIMC(imc);
-                arrayObjetos.get(i).historialmasa.add(new Masa_corporal(mes, altura, peso, imc, t));
-        }
+                arrayObjetos.get(u).historialmasa.add(new Masa_corporal(mes, altura, peso, imc, t));
+        
        
     }
     public void mostrarhistorial(int up){
-           for (int j = 0; j < arrayObjetos.get(up).historialmasa.size(); j++) {
-               
+           for (int j = 0; j < arrayObjetos.get(up).historialmasa.size(); j++) { 
             JOptionPane.showMessageDialog(null, arrayObjetos.get(up).historialmasa.get(j));
             
         } 
-        
+        submenudehistorial(up);
         
     }
+    
+    
     
     
     
