@@ -18,13 +18,13 @@ import javax.swing.JOptionPane;
 public class Controller {
 
     
-    public int n =0;
+    public int per =0;
    
     public Controller() {
        
     }
     
-//    Persona arrayObjetos[]=new Persona[2];
+
     
     ArrayList <Persona> arrayObjetos=new ArrayList();
     Validaciones vali=new Validaciones();
@@ -42,11 +42,11 @@ public class Controller {
                 + "\n"
                 + "Elija la opcion del 1 al 6 \n"
                 + "---------------\n"
-                + "1. Crear y llenar array\n"
-                + "2. Mostrar array\n"
+                + "1. Registrar persona\n"
+                + "2. Mostrar personas\n"
                 + "3. Eliminar todas las personas registradas\n"
                 + "4. Verificar cuantas personas estan registradas\n"
-                + "5. Calcular masa corporal\n"
+                + "5. Agregar y ver masa corporal\n"
                 + "6. Salir\n")));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al ingresar una opcion \n"
@@ -63,9 +63,11 @@ public class Controller {
         switch(op) {    
         case 1:
         this.llenarArray();
+        this.cargarMenu();
         break;
         case 2:
              this.mostrarArray();
+             this.cargarMenu();
         break;
         case 3:
             this.eliminarDatosPersonas();
@@ -97,45 +99,42 @@ public class Controller {
         }
     }
     public void llenarArray(){
-        int i=0;
             try{
-            int upp=0;
+            
+             per=per+1;    
+            int n=0;
+            String nombre;
+             String apellido;
+             String fecha;
+     
+             do{
+                nombre=vali.validarNombre(per);
+             apellido=vali.validarApellido(per);
+            
+             String documento=Validardocumento(per);         
             do{
-             int per=i+1; 
-            String nombre=JOptionPane.showInputDialog("Escribe los nombres de persona "+per);
-            String apellido=JOptionPane.showInputDialog("Escribe los apellidos de la persona "+per);
-            String documento=vali.validardocumento(JOptionPane.showInputDialog("Escribe el documento de la persona "+per));
+            fecha=(JOptionPane.showInputDialog("Escribe fecha de nacimiento de la persona "+per)); 
+            }while(validarfecha(fecha));
+             JOptionPane.showMessageDialog(null,"Usted tiene una edad de:"+GetEdad(fecha));
+             
+            String tel=vali.Validartelefono(per);
+                
             
+            arrayObjetos.add(new Persona(nombre,apellido,documento,fecha,tel));
+           
+                System.out.println(per);
+            JOptionPane.showMessageDialog(null, "Persona registrada con exito.");
             
-            String r;
-            
-            do{
-            r=(JOptionPane.showInputDialog("Escribe fecha de nacimiento de la persona "+per)); 
-            }while(validarfecha(r));
-            
-             JOptionPane.showMessageDialog(null, GetEdad(r));
-            String tel=JOptionPane.showInputDialog("Escribe el telelefono de la persona "+per);
-            
-            
-            arrayObjetos.add(new Persona(nombre,apellido,documento,r,tel));
-            
-            n+=1;
-            
-            int up=JOptionPane.showConfirmDialog(null, "¿Desea seguir agregando?", "Agregar persona"
-                    + "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(up==0){
-                    upp=1;
-                }
-                    
-            }while(upp==1 );
-            upp=0;
-//            }
+            }while(vali.PreguntarSiDeseaAgregarPersona()==true );
+           
                 }catch(Exception ie){
                 JOptionPane.showMessageDialog(null, "Error al registrar la persona, intente nuevamente");
+                per--;
                 this.llenarArray();
+                
             }
             
-            this.cargarMenu();
+            
             
 }    
         
@@ -148,17 +147,16 @@ public class Controller {
             
         } 
         }
-       
-        this.cargarMenu();
+      
     }
      
     
     public void eliminarDatosPersonas(){
         
         for (int i=0;i<arrayObjetos.size();i++){
-            arrayObjetos.set(i, null);
+            arrayObjetos.remove(i);
         }
-             n=0;
+             per=0;
        this.cargarMenu();  
     }
     
@@ -168,7 +166,7 @@ public class Controller {
             return false;
             
         }else{
-            JOptionPane.showMessageDialog(null, "hay "+n+" personas registradas en el vector");
+            JOptionPane.showMessageDialog(null, "hay "+per+" personas registradas en el vector");
             return true;
         }
        
@@ -219,9 +217,11 @@ public class Controller {
             for (int j = 0; j < arrayObjetos.size(); j++) {
                 System.out.println("ingrese");
                 if(arrayObjetos.get(j).getDocumento().equals(opuuu)){
-                    System.out.println("La persona existe");
+                    JOptionPane.showMessageDialog(null, "Persona encontrada con exito");
                     submenudehistorial(j);
                 
+                }else{
+                    JOptionPane.showMessageDialog(null, "La persona no se ha encontrado");
                 }
             }
              
@@ -243,6 +243,7 @@ public class Controller {
                      + "2. Imprimir personas\n"
                      + "3. historial clinico\n"
                      + "4. Cerrar todo"
+                     + "5. Salr"
                      + "\n")));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al ingresar una opcion \n"
@@ -256,18 +257,23 @@ public class Controller {
     public void opcionIMC(int op){
         switch(op){
             case 1:
-                
+                llenarArray();
+                menuIMC();
             break;
             case 2:
               mostrarArray();
+              menuIMC();
             break;
             case 3:
                 HistorialMasaCorporal();
             break;
             case 4: 
-                this.confirmarCerrarTodo();
-                this.menuIMC();
+               cargarMenu();         
             break;  
+            case 5:
+                 this.confirmarCerrarTodo();
+                this.menuIMC();
+                break;
             default:
                 JOptionPane.showMessageDialog(null, "Error al seleccionar la opcion \n"
                 + "\n"
@@ -284,22 +290,22 @@ public class Controller {
     }
     public double alturaPersona(){
         double altu_2=0,alm=0;
+        int ru=0;
+        
         try {
         double alt=Double.parseDouble(JOptionPane.showInputDialog("Ingrese la altura de la persona\n"
                 + "\n"
                 + "*Recuerde que tiene que ser en centimetros*"));
         alm=alt/100;
          altu_2=alm*alm;
-         
-         return altu_2;
-         
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al ingresar la altura \n"
                     + "\n"
                     + "Verifique e intente de nuevo");
                      this.alturaPersona();
         }
-        return 55;
+        
+        return altu_2;
         }
     
     public double pesoPersona(){
@@ -308,14 +314,14 @@ public class Controller {
         peso=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el peso de la persona\n"
                 + "\n"
                 + "*Recuerde que tiene que ser en Kilogramos*"));
-            return peso;
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al ingresar el peso \n"
                     + "\n"
                     + "Verifique e intente de nuevo");
                      this.pesoPersona();
         }
-        return 56;
+        return peso;
     }
 
    public String evaluarIMC (double imc){
@@ -374,6 +380,12 @@ public class Controller {
             case 2:
                 mostrarhistorial(u);
             break;    
+            case 3:
+               menuIMC();
+               break;
+            case 4:
+                confirmarCerrarTodo();
+                break;
         }
         
     }
@@ -405,18 +417,42 @@ public class Controller {
     }
     
     
+   public String Validardocumento(int per){
+       int pr=0;
+       String rr;
+       
+       
+           rr=JOptionPane.showInputDialog("Escribe el documento de la persona numero: "+per);
+           if(rr.isEmpty()){
+               JOptionPane.showMessageDialog(null, "Campo vacio \n"
+                       + "Verifique al ingresar");
+           }else{
+           for (int i = 0; i < arrayObjetos.size(); i++) {
+               if(arrayObjetos.get(i).getDocumento().equals(rr)){
+                   JOptionPane.showMessageDialog(null, "El documento de identidad ya ha sido registrado.");
+                   this.Validardocumento(per);
+               }else{
+	try {
+		Integer.parseInt(rr);
+		
+	} catch (NumberFormatException nfe){
+            JOptionPane.showMessageDialog(null, "Error al ingresar el documento de identidad \n"
+                    + "Verifique al ingresar.");
+		this.Validardocumento(per);
+	}
+        }
+           }
+         
+       }
+         
+       return rr;
+       
+   }
     
     
     
 //    public boolean validarNombre_apellido(String re){
-//        for (int i = 0; i < re.length(); i++)
-//		{
-//			char caracter = re.toUpperCase().charAt(i);
-//			int valorASCII = (int)caracter;
-//			if (valorASCII != 165 && (valorASCII < 65 || valorASCII > 90))
-//				return false; //Se ha encontrado un caracter que no es letra
-//		}
-//        
+//       
 //    }
     
 //    JOptionPane.showMessageDialog(null, "Ingrese peso y altura de la persona: \n"

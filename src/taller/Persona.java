@@ -85,7 +85,12 @@ import java.util.ArrayList;
     
     public String toString(){
     String a="Persona registrada: \n"
-            + "Nombre: "+nombre+" "+Apellido+", "+fecha_nacimiento+" años y telefono, "+tel;
+            + "\n"
+            + "Nombre: "+nombre+"\n"
+            + "Apellido: "+Apellido+"\n"
+            + "Fecha de nacimiento: "+fecha_nacimiento+"\n"
+            + "Documento: "+documento+"\n"
+            + "Telefono: "+tel;
             
     return a;
     

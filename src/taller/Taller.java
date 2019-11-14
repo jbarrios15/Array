@@ -5,6 +5,7 @@
  */
 package taller;
 
+import java.io.BufferedReader;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,12 +19,19 @@ public class Taller {
      */
     public static void main(String[] args) {
         
-
+//
         Controller mas= new Controller();
           mas.cargarMenu();
-          
-          
+//       double ty= mas.pesoPersona();
+//        System.out.println(ty);
+//        int i=1;
+//      Validaciones rt=new Validaciones();
+//      String tel=rt.Validartelefono(i);
+//        
       }
+    
+    
+    
       }
     
 
