@@ -78,8 +78,8 @@ public class Masa_corporal{
  public String toString(){
     String a="El hiostorial de la persona es: \n"
             + "Mes: "+mes+"\n"
-            + "Peso: "+peso+"\n"
-            + "Altura: "+altura+"\n"
+            + "Peso: "+peso+" Kg\n"
+            + "Altura: "+altura+" Cm \n"
             + "Indice de masa corporal :"+imc+"\n"
             + "Diagnostico: "+ diagnostico;
             

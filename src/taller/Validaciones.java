@@ -32,9 +32,13 @@ public class Validaciones {
    public String validarNombre(int per){
        String na="";
        int ep=0;
-       do{
+       
        na=JOptionPane.showInputDialog("Ingrese el nombre de la persona numero: "+per);
-      
+      if(na.isEmpty()){
+          JOptionPane.showMessageDialog(null, "Campo vacio \n"
+                       + "Verifique al ingresar");
+          this.validarNombre(per);
+      }else{
         for (int i = 0; i < na.length(); i++){
                     
 			char caracter = na.toUpperCase().charAt(i);
@@ -42,22 +46,25 @@ public class Validaciones {
 			if (valorASCII != 165 && (valorASCII < 65 || valorASCII > 90 )){
                               JOptionPane.showMessageDialog(null, "Error al ingresar nombre \n"
                                       + "Verifique al digitar ");
-                              ep=1;  
-                             }else{
-                            ep=2;
-                        }
+                               this.validarNombre(per);
+                             }
                         
 		}
         
-        }while(ep==1);
+         }
        return na;
+       
    }
    public String validarApellido(int per){
        String na="";
        int ep=0;
        
        na=JOptionPane.showInputDialog("Ingrese el apellido de la persona numero: "+per);
-      
+      if(na.isEmpty()){
+           JOptionPane.showMessageDialog(null, "Campo vacio \n"
+                       + "Verifique al ingresar");
+           this.validarApellido(per);
+      }else{
         for (int i = 0; i < na.length(); i++){
                     
 			char caracter = na.toUpperCase().charAt(i);
@@ -71,6 +78,8 @@ public class Validaciones {
                         }
                         
 		}
+      
+       }
        return na;
    }
    
@@ -84,7 +93,66 @@ public class Validaciones {
        return false;
    }
    
+   public double alturaPersona(double alt){
+       int pas=0;
+        double alttotal=0;
+        do{
+            
+        try {
+        
+        double altmetros=alt/100;
+        alttotal=altmetros*altmetros;
+            pas=2;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar la altura \n"
+                    + "\n"
+                    + "Verifique e intente de nuevo");
+                     pas=1;
+        }
+        
+        }while(pas==1);
+        System.out.println("fin");
+        return alttotal;
+     
+        }
    
+   public double pesoPersona(){
+       int pas=0;
+        double peso=0;
+        do{
+            
+        
+        try {
+        peso=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el peso de la persona\n"
+                + "\n"
+                + "*Recuerde que tiene que ser en KILOGRAMOS*"));
+            pas=2;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar el peso \n"
+                    + "\n"
+                    + "Verifique e intente de nuevo");
+                     pas=1;
+        }
+        
+        }while(pas==1);
+        
+        return peso;
+    }
+   
+   //verificar con profesor
+   
+//   public double ingresarNumeroDouble(){
+//       double evaluarIMC=0;
+//        try {
+//           evaluarIMC=Double.parseDouble(JOptionPane.showInputDialog("Ingrese la masa corporal"));  
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Error al ingresar la masa corporal \n"
+//                    + "\n"
+//                    + "Verifique a  digitar");
+//            this.ingresarNumeroDouble();
+//        }
+//        return evaluarIMC;
+//    }
    
 //   
 //   public String Validardocumento(int per,int size,Object docu){

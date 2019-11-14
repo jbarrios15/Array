@@ -215,14 +215,12 @@ public class Controller {
                     + "Si no lo conoce puede ver las personas registradas \n y su numero de documento en la segunda opcion \n"
                     + "de el menú anterior.");
             for (int j = 0; j < arrayObjetos.size(); j++) {
-                System.out.println("ingrese");
                 if(arrayObjetos.get(j).getDocumento().equals(opuuu)){
                     JOptionPane.showMessageDialog(null, "Persona encontrada con exito");
                     submenudehistorial(j);
                 
-                }else{
-                    JOptionPane.showMessageDialog(null, "La persona no se ha encontrado");
                 }
+                JOptionPane.showMessageDialog(null, "La persona no se ha encontrado");
             }
              
     }
@@ -242,7 +240,7 @@ public class Controller {
                      + "1. Crear persona \n"
                      + "2. Imprimir personas\n"
                      + "3. historial clinico\n"
-                     + "4. Cerrar todo"
+                     + "4. Cerrar todo\n"
                      + "5. Salr"
                      + "\n")));
         } catch (Exception e) {
@@ -308,21 +306,7 @@ public class Controller {
         return altu_2;
         }
     
-    public double pesoPersona(){
-       double peso=0;
-        try {
-        peso=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el peso de la persona\n"
-                + "\n"
-                + "*Recuerde que tiene que ser en Kilogramos*"));
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al ingresar el peso \n"
-                    + "\n"
-                    + "Verifique e intente de nuevo");
-                     this.pesoPersona();
-        }
-        return peso;
-    }
+    
 
    public String evaluarIMC (double imc){
        String t="";
@@ -363,11 +347,13 @@ public class Controller {
     
     public void submenudehistorial(int u){
        
-        opcionsubmenuhistorial(Integer.parseInt(JOptionPane.showInputDialog("Eliga opcion: \n"
+        opcionsubmenuhistorial(Integer.parseInt(JOptionPane.showInputDialog("Hola, "
+                + ""+arrayObjetos.get(u).getNombre()+" "+arrayObjetos.get(u).getApellido()+"\n"
+                + "Eliga una opcion: \n"
                 + "\n"
                 + "1. Registrar historial IMC\n"
                 + "2. imprimir historial IMC\n"
-                + "3. Retroceder"
+                + "3. Retroceder\n"
                 + "4. Salir")),u);
         
     }
@@ -385,32 +371,46 @@ public class Controller {
                break;
             case 4:
                 confirmarCerrarTodo();
-                break;
+             break;
         }
         
     }
     
     
     public void registrarhistorial(int u){
-        
+            
             JOptionPane.showMessageDialog(null, "Ingrese peso y altura de la persona : \n"
                         + arrayObjetos.get(u));
-                String mes=JOptionPane.showInputDialog("Ingrese el mes ");
-               double peso=Double.parseDouble(JOptionPane.showInputDialog("Ingrese peso de la persona "));
-                double altura=Double.parseDouble(JOptionPane.showInputDialog("Ingrese altura de la persona "));
-                double alturametros=altura/100;
-                double alt=alturametros*alturametros; 
-                double imc=peso/alt;
+            String mes=opcionmes();
+//                String mes=JOptionPane.showInputDialog("Ingrese el mes ");
+                
+               double peso=vali.pesoPersona();
+               
+               double alt=Double.parseDouble(JOptionPane.showInputDialog("Ingrese la altura de la persona\n"
+                + "\n"
+                + "*Recuerde que tiene que ser en CENTIMETROS*"));
+               double altura=vali.alturaPersona(alt);
+//                double altura=Double.parseDouble(JOptionPane.showInputDialog("Ingrese altura de la persona "));
+//                double alturametros=altura/100;
+//                double alt=alturametros*alturametros; 
+                double imc=peso/altura;
                 JOptionPane.showMessageDialog(null, imc);
                  String t=evaluarIMC(imc);
-                arrayObjetos.get(u).historialmasa.add(new Masa_corporal(mes, altura, peso, imc, t));
-        
+                arrayObjetos.get(u).historialmasa.add(new Masa_corporal(mes, alt, peso, imc, t));
+                JOptionPane.showMessageDialog(null, "Historial registrado con exito");
+        submenudehistorial(u);
        
     }
     public void mostrarhistorial(int up){
+        if(arrayObjetos.get(up).historialmasa.isEmpty()){
+            JOptionPane.showMessageDialog(null, "La persona "+arrayObjetos.get(up).getNombre()+" "+" "
+                    + arrayObjetos.get(up).getApellido()+"\n con numero documento: "+arrayObjetos.get(up).getDocumento()+"\n"
+                            + "No tiene registrado ningun historial.");
+        }else{
            for (int j = 0; j < arrayObjetos.get(up).historialmasa.size(); j++) { 
             JOptionPane.showMessageDialog(null, arrayObjetos.get(up).historialmasa.get(j));
             
+        } 
         } 
         submenudehistorial(up);
         
@@ -427,6 +427,7 @@ public class Controller {
                JOptionPane.showMessageDialog(null, "Campo vacio \n"
                        + "Verifique al ingresar");
            }else{
+               
            for (int i = 0; i < arrayObjetos.size(); i++) {
                if(arrayObjetos.get(i).getDocumento().equals(rr)){
                    JOptionPane.showMessageDialog(null, "El documento de identidad ya ha sido registrado.");
@@ -448,6 +449,87 @@ public class Controller {
        return rr;
        
    }
+    
+    public String menuopciondemes(){
+        int t=Integer.parseInt(JOptionPane.showInputDialog("Digite el mes\n"
+                + "\n"
+                + "1. Enero\n"
+                + "2. Febrero"
+                + "3. Marzo\n"
+                + "4. Abril"
+                + "5. Mayo\n"
+                + "6. Junio\n"
+                + "7, Julio\n"
+                + "8. Agosto\n"
+                + "9. Septiembre\n"
+                + "10. Octubre\n"
+                + "11. Noviembre\n"
+                + "12. Diciembre"));
+//        opcionmes(t);
+        return "";
+    }
+    public String opcionmes(){
+        String mes="";
+        int t=Integer.parseInt(JOptionPane.showInputDialog("Digite el mes\n"
+                + "\n"
+                + "1. Enero\n"
+                + "2. Febrero"
+                + "3. Marzo\n"
+                + "4. Abril"
+                + "5. Mayo\n"
+                + "6. Junio\n"
+                + "7, Julio\n"
+                + "8. Agosto\n"
+                + "9. Septiembre\n"
+                + "10. Octubre\n"
+                + "11. Noviembre\n"
+                + "12. Diciembre"));
+        switch(t){
+            case 1:
+                mes="Enero";
+            break;
+            case 2:
+                 mes="Febrero";
+            break;
+            case 3:
+                 mes="Marzo";
+            break;
+            case 4:
+                 mes="Abril";
+            break;
+            case 5:
+                 mes="Mayo";
+            break;
+            case 6:
+                 mes="Junio";
+            break;
+            case 7:
+                 mes="Julio";
+            break;
+            case 8:
+                 mes="Agosto";
+            break;
+            case 9:
+                 mes="Septiembre";
+            break;   
+            case 10:
+                mes="Octubre";
+            break;
+            case 11:
+                mes="Noviembre";
+            break;
+            case 12:
+                mes="Diciembre";
+            break;
+            default:
+                JOptionPane.showMessageDialog(null, "Error al seleccionar un mes \n"
+                + "\n"
+                + "Recuerde elegir del 1 al 12");
+                menuopciondemes();
+        }
+        return mes;
+        
+    }
     
     
     
